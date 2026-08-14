@@ -5,9 +5,9 @@ export const getProducts = async () => {
     // const data = await response.data
     // return data
     // 模擬網路延遲
-    await new Promise((resolve) => {
-        setTimeout(() => { resolve() }, 3000)
-    })
+    // await new Promise((resolve) => {
+    //     setTimeout(() => { resolve() }, 3000)
+    // })
     return response.data
 }
 
@@ -17,7 +17,7 @@ export const getProduct = async (id) => {
 }
 
 export const getCategories = async () => {
-    const response = await api.get('/products/categpries')
+    const response = await api.get('/products/categories')
     return response.data
 }
 
