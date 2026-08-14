@@ -4,7 +4,7 @@ import { useCartStore } from '@/stores/cart'
 import { useUserStore } from '@/stores/user'
 
 const cartStore = useCartStore()
-const { items, totalItems, totalMoney } = storeToRefs(cartStore)
+const { items, totalItems, totalMoney2, discount } = storeToRefs(cartStore)
 const { addItem, removeItem, increaseAmount, decreaseAmount } = cartStore
 const userStore = useUserStore()
 const { isLogin } = storeToRefs(userStore)
@@ -19,7 +19,7 @@ const { login, logout } = userStore
         <h1>測試購物車和登入登出</h1>
         <!-- 狀態顯示：商品數與總金額 -->
         <p>購物車商品總數量: {{ totalItems }}</p>
-        <p>總金額: NT {{ totalMoney }}</p>
+        <p>總金額: NT {{ totalMoney2 }}</p>
         <!-- 操作按鈕：加入商品、清空 -->
         <button @click="addItem({ id: 2, name: '香蕉', price: 30 })">香蕉</button>
         <button @click="addItem({ id: 1, name: '香蕉', price: 50 })">蘋果</button>
@@ -33,7 +33,9 @@ const { login, logout } = userStore
             </li>
         </ul>
         <hr>
-        <p>登入狀態: {{ isLogin ? '已登入' : '未登入' }}</p>
+        <p>登入狀態: {{ isLogin ? '已登入' : '未登入' }}
+            {{ isLogin ? '(打八折)' : '' }}
+        </p>
         <button @click="login({ name: 'Ben Chen' })">登入</button>
         <button @click="logout()">登出</button>
     </div>

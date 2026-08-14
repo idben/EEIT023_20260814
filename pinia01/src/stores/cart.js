@@ -1,10 +1,18 @@
 import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
+import { useUserStore } from '@/stores/user'
+
+
+
 
 export const useCartStore = defineStore(
     'cart',
     () => {
+        const userStore = useUserStore()
+
         const items = ref([])
+
+        const discount = computed(() => userStore.isLogin ? 0.8 : 1)
 
         const totalItems = computed(() =>
             items.value.reduce((sum, item) => sum + item.quantity, 0)
@@ -13,6 +21,11 @@ export const useCartStore = defineStore(
         const totalMoney = computed(() =>
             items.value.reduce((sum, item) => sum + item.quantity * item.price, 0)
         )
+
+        const totalMoney2 = computed(() => {
+            const subtotal = items.value.reduce((sum, item) => sum + item.quantity * item.price, 0)
+            return subtotal * discount.value
+        })
 
         const isEmpty = computed(() => items.value.length == 0)
 
@@ -47,8 +60,10 @@ export const useCartStore = defineStore(
 
         return {
             items,
+            discount,
             totalItems,
             totalMoney,
+            totalMoney2,
             isEmpty,
             addItem,
             removeItem,
