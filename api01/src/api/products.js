@@ -1,7 +1,9 @@
 import api from "./index";
 
-export const getProducts = async () => {
-    const response = await api.get('/products')
+export const getProducts = async (controller) => {
+    const response = await api.get('/products', {
+        signal: controller.signal
+    })
     // const data = await response.data
     // return data
     // 模擬網路延遲
@@ -21,7 +23,9 @@ export const getCategories = async () => {
     return response.data
 }
 
-export const getProductsByCategory = async (category) => {
-    const response = await api.get(`/products/category/${category}`)
+export const getProductsByCategory = async (category, controller) => {
+    const response = await api.get(`/products/category/${category}`, {
+        signal: controller.signal
+    })
     return response.data
 }
