@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { getProducts, getProductsByCategory, getCategories } from '@/api/products'
+import axios from 'axios'
 
 const products = ref([])
 const categories = ref([])
@@ -28,6 +29,9 @@ const fetchProducts = async function () {
         }
     } catch (err) {
         // catch: 判斷是不是取消造成的錯誤
+        if (axios.isCancel(err)) {
+            return
+        }
         error.value = err.message || '戴入錯誤'
     } finally {
         // finally: 關閉 loading
