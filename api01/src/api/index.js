@@ -42,6 +42,7 @@ api.interceptors.response.use(
             }
         } else if (error.request) {
             console.log('網路連線失敗')
+            error.message = '網路連線失敗'
         }
         return Promise.reject(error)
     }
