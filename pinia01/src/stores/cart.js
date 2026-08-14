@@ -1,16 +1,21 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore, storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/user'
-
-
-
 
 export const useCartStore = defineStore(
     'cart',
     () => {
         const userStore = useUserStore()
 
-        const items = ref([])
+        const savedCart = localStorage.getItem('cart0001')
+        const items = ref(savedCart ? JSON.parse(savedCart) : [])
+
+        watch(items,
+            (newItems) => {
+                localStorage.setItem('cart0001', JSON.stringify(newItems))
+            },
+            { deep: true }
+        )
 
         const discount = computed(() => userStore.isLogin ? 0.8 : 1)
 
