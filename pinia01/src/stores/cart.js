@@ -26,11 +26,20 @@ export const useCartStore = defineStore(
             }
         }
 
-        function removeItem() { }
+        function removeItem(productId) {
+            const index = items.value.findIndex(it => it.id == productId)
+            if (index > -1) items.value.splice(index, 1)
+        }
 
-        function increaseAmount() { }
+        function increaseAmount(productId) {
+            const item = items.value.find(it => it.id == productId)
+            if (item) item.quantity++
+        }
 
-        function decreaseAmount() { }
+        function decreaseAmount(productId) {
+            const item = items.value.find(it => it.id == productId)
+            if (item && item.quantity > 1) item.quantity--
+        }
 
         function clearCart() {
             items.value = []
