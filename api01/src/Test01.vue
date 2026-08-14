@@ -11,7 +11,6 @@ const fetchProducts = async () => {
     const response = await axios.get('https://fakestoreapi.com/products')
     products.value = await response.data
     console.log(products.value);
-
 }
 
 // 元件掛載後呼叫 API
@@ -23,6 +22,19 @@ onMounted(() => {
 <template>
     <h1>呼叫 API</h1>
     <!-- 標題與商品列表 -->
+    <ul>
+        <li v-for="product in products" :key="product.id">
+            <img class="img100" :src="product.image" alt="">
+            <br>
+            {{ product.title }} - ${{ product.price }}
+        </li>
+    </ul>
 </template>
 
-<style scoped></style>
+<style scoped>
+.img100 {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+</style>
